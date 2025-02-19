@@ -43,4 +43,35 @@ public class CustomerServiceImpl implements CustomerService {
     public void updateCustomer(Customer customer) {
         repository.save(mapper.map(customer, CustomerEntity.class));
     }
+
+    @Override
+    public Customer seachById(Integer id) {
+        return mapper.map(repository.findById(id), Customer.class);
+    }
+
+    @Override
+    public List<Customer> searchByName(String name) {
+        List<CustomerEntity> byName =  repository.findByName(name);
+        List<Customer> customerList = new ArrayList<>();
+
+        byName.forEach(customerEntity -> {
+            customerList.add(mapper.map(customerEntity, Customer.class));
+        });
+
+        return customerList;
+    }
+
+    @Override
+    public List<Customer> searchByAddress(String address) {
+        List<CustomerEntity> byAddress = repository.findByAddress(address);
+        List<Customer> customerList = new ArrayList<>();
+
+        byAddress.forEach(customerEntity -> {
+            customerList.add(mapper.map(customerEntity, Customer.class));
+        });
+
+        return customerList;
+    }
+
+
 }
