@@ -2,11 +2,7 @@ function loadCustomer(){
   fetch("http://localhost:8080/customer/get-all")
   .then(res=>res.json())
   .then(data=>{
-    console.log(data);
-
     let tableRow='';
-    
-
     data.forEach(customer=>{
       tableRow+=`
         <tr>
@@ -47,7 +43,6 @@ async function searchCustomer(param){
 
     searchResult.forEach(customer=>{
       if(customer.id){
-        console.log(customer);
         tableRow+=`
         <tr>
           <td>${customer.id}</td>

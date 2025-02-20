@@ -22,4 +22,8 @@ function addCustomer(){
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.error(error));
+
+  document.getElementById("txtName").value = "";
+  document.getElementById("txtAddress").value = "";
+  document.getElementById("txtSalary").value = "";
 }
