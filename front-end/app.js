@@ -26,6 +26,7 @@ function loadCustomer(){
 loadCustomer();
 
 async function searchCustomer(param){
+  
   param = document.getElementById("searchCustomer").value;
 
   const searchResult = [];
@@ -36,7 +37,7 @@ async function searchCustomer(param){
     method: "GET",
     headers: myHeaders,
   };
-  
+  let tableRow='';
   try {
     await Promise.all([
       searchByName(param, requestOptions, searchResult),
@@ -47,6 +48,14 @@ async function searchCustomer(param){
     searchResult.forEach(customer=>{
       if(customer.id){
         console.log(customer);
+        tableRow+=`
+        <tr>
+          <td>${customer.id}</td>
+          <td>${customer.name}</td>
+          <td>${customer.address}</td>
+          <td>${customer.salary}</td>
+        </tr>
+      `;
       }
     })
     
@@ -55,6 +64,28 @@ async function searchCustomer(param){
   }
     
   document.getElementById("searchCustomer").value ="";
+
+  const searchResultContainer = document.getElementById("search-results");
+  searchResultContainer.innerHTML=`
+    <div class="container w-75">
+      <h1 class="text-center text-light">Search Results</h1>
+      <table class="table table-success">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Address</th>
+            <th scope="col">Salary</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${tableRow}   
+        </tbody>
+      </table>
+      <div class="btn btn-warning my-2" onclick="closeSearchWindow()">close</div>
+    </div>
+  `;
+  
 }
 
 async function searchById(param, requestOptions, searchResult) {
@@ -112,4 +143,8 @@ async function searchByAddress(param, requestOptions, searchResult) {
   } catch (error) {
     console.error(error);
   }
+}
+
+function closeSearchWindow() {
+  document.getElementById("search-results").innerHTML="";
 }
